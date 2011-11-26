@@ -17,7 +17,7 @@ Mongoid::configure do |config|
 end
 
 get '/' do
-  "Hello"
+  erb :index
 end
 
 post '/event' do
