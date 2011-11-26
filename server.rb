@@ -17,8 +17,7 @@ Mongoid::configure do |config|
 end
 
 get '/' do
-  headers "Content-type"=> "application/json"
-  body params.to_json
+  "Hello"
 end
 
 post '/event' do
