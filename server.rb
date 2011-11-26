@@ -4,9 +4,15 @@ require 'mongoid'
 Dir[File.dirname(__FILE__) + '/lib/**/*.rb'].each {|file| require file }
 
 Mongoid::configure do |config|
-  config.master = Mongo::Connection.new.db('causatum')
-  config.use_utc =  false
-  config.use_activesupport_time_zone = true
+  if ENV["MONGOHQ_URL"]
+    uri = URI.parse(ENV['MONGOHQ_URL'])
+    config.master = Mongo::Connection.new(uri.host, uri.port).db(uri.path.gsub(/^\//, ''))
+    config.master.authenticate(uri.user, uri.password)
+  else
+    config.master = Mongo::Connection.new.db('causatum')
+    config.use_utc =  false
+    config.use_activesupport_time_zone = true
+  end
 end
 
 get '/' do
