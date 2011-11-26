@@ -8,6 +8,7 @@ Mongoid::configure do |config|
     uri = URI.parse(ENV['MONGOHQ_URL'])
     config.master = Mongo::Connection.new(uri.host, uri.port).db(uri.path.gsub(/^\//, ''))
     config.master.authenticate(uri.user, uri.password)
+    config.skip_version_check=true
   else
     config.master = Mongo::Connection.new.db('causatum')
     config.use_utc =  false
