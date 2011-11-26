@@ -36,6 +36,9 @@ post '/event' do
   e.source = params_map["source"]
   e.date = time_for(params_map["date"])
   e.tags = (e.tags + ((params_map["tags"]||"").split(',')||[])).uniq
+  if params_map.has_key?("latitude") && params_map.has_key?("longtitude")
+    e.geo_location = GeoLocation.new(latitude: params_map.has_key?("latitude"), longtitude: params_map.has_key?("longtitude"))
+  end
   e.save
   if e.valid?
     a =  {status: "ok"}
