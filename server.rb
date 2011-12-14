@@ -19,8 +19,10 @@ Mongoid::configure do |config|
   end
 end
 
-#use Rack::Session::Cookie
-enable :sessions
+use Rack::Session::Cookie, :key => 'rack.session',
+                               :path => '/',
+                               :expire_after => 14400,
+                               :secret => 'change_me'
 
 use OmniAuth::Builder do  
   provider :openid,  :name => 'google', :store => OpenID::Store::Filesystem.new('./tmp'), :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
