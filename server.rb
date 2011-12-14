@@ -24,14 +24,15 @@ enable :sessions
 
 OmniAuth.config.full_host = "http://causatum.org"
 
+
 use OmniAuth::Builder do  
-  provider :openid,  :name => 'google',:domain => 'causatum.org', :store => OpenID::Store::Filesystem.new('./tmp'), :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
+  provider :openid,  :name => 'google', :store => OpenID::Store::Filesystem.new('./tmp'), :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
 end
 
 helpers do
   def protected!
     p session["auth"]
-     redirect '/auth/google' unless session["auth"]
+     redirect '/auth/google' # unless session["auth"]
   end
   
   def authorize(auth)
