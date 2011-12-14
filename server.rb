@@ -19,7 +19,7 @@ Mongoid::configure do |config|
   end
 end
 
-use Rack::Session::Cookie
+#use Rack::Session::Cookie
 enable :sessions
 
 OmniAuth.config.full_host = "http://causatum.org"
