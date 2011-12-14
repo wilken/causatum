@@ -32,7 +32,7 @@ end
 helpers do
   def protected!
     p session["auth"]
-     redirect '/auth/google' # unless session["auth"]
+     redirect '/auth/google' unless session["auth"]
   end
   
   def authorize(auth)
