@@ -22,6 +22,8 @@ end
 use Rack::Session::Cookie
 enable :sessions
 
+OmniAuth.config.full_host = "http://causatum.org"
+
 use OmniAuth::Builder do  
   provider :openid,  :name => 'google',:domain => 'causatum.org', :store => OpenID::Store::Filesystem.new('./tmp'), :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
 end
