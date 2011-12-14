@@ -48,7 +48,7 @@ get '/auth/logout' do
 end
 
 get '/' do
- # protected!
+  protected!
   erb :index
 end
 
