@@ -23,7 +23,7 @@ use Rack::Session::Cookie
 enable :sessions
 
 use OmniAuth::Builder do  
-  provider :openid,  :name => 'google', :store => OpenID::Store::Filesystem.new('./tmp'), :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
+  provider :openid,  :name => 'google',:domain => 'causatum.org' :store => OpenID::Store::Filesystem.new('./tmp'), :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
 end
 
 helpers do
@@ -48,7 +48,7 @@ get '/auth/logout' do
 end
 
 get '/' do
-  #protected!
+  protected!
   erb :index
 end
 
