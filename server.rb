@@ -1,6 +1,9 @@
 require 'sinatra'
 require 'json'
 require 'mongoid'
+require 'omniauth-openid'
+require 'openid/store/filesystem'
+
 Dir[File.dirname(__FILE__) + '/lib/**/*.rb'].each {|file| require file }
 
 Mongoid::configure do |config|
@@ -16,28 +19,82 @@ Mongoid::configure do |config|
   end
 end
 
+use Rack::Session::Cookie
+enable :sessions
+
+use OmniAuth::Builder do  
+  provider :openid,  :name => 'google', :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
+end
+
+helpers do
+  def protected!
+    p session["auth"]
+     redirect '/auth/google' unless session["auth"]
+  end
+  
+  def authorize(auth)
+    session["auth"] = auth
+  end
+end
+
+post '/auth/:name/callback' do
+  authorize("hey")
+  redirect '/'
+end
+
+get '/auth/logout' do
+  session.delete("auth")
+  redirect '/'
+end
+
 get '/' do
+  protected!
   erb :index
 end
 
-post '/event' do
-  params_map = JSON.parse(params.keys[0])
-  if !params_map.has_key?("id")
+post '/api/users' do
+  params = JSON.parse(request.env["rack.request.form_vars"])
+  p params
+end
+
+post '/api/login' do
+  params = JSON.parse(request.env["rack.request.form_vars"])
+  p params
+end
+
+get "/api/search" do
+=begin
+islam and loc:100,200 and mecca
+{
+  "AND" : {
+    "KEYWORD" : "islam",
+    "AND" : {
+      "LOCATION" : [100,200],
+      "KEYWORD" : "mecca"
+    }
+  }
+}
+=end
+end
+
+post '/api/events' do
+  params = JSON.parse(request.env["rack.request.form_vars"])
+  if !params.has_key?("id")
     e = Event.new
   else
     begin
-      e = Event.find(params_map["id"])
+      e = Event.find(params["id"])
     rescue
       e = Event.new
     end
   end
-  e.author = params_map["author"]
-  e.text = params_map["text"]
-  e.source = params_map["source"]
-  e.date = time_for(params_map["date"])
-  e.tags = (e.tags + ((params_map["tags"]||"").split(',')||[])).uniq
-  if params_map.has_key?("latitude") && params_map.has_key?("longtitude")
-    e.geo_location = GeoLocation.new(latitude: params_map.has_key?("latitude"), longtitude: params_map.has_key?("longtitude"))
+  e.author = params["author"]
+  e.text = params["text"]
+  e.source = params["source"]
+  e.date = time_for(params["date"])
+  e.tags = (e.tags + ((params["tags"]||"").split(',')||[])).uniq
+  if params.has_key?("latitude") && params.has_key?("longtitude")
+    e.geo_location = GeoLocation.new(latitude: params.has_key?("latitude"), longtitude: params.has_key?("longtitude"))
   end
   e.save
   if e.valid?

@@ -3,6 +3,7 @@ class Event
   include Mongoid::Timestamps
   include Mongoid::Versioning
   embeds_one :geo_location
+  belongs_to :user
   index :keywords
 
   validates_presence_of :text
