@@ -7,7 +7,7 @@ Dir[File.dirname(__FILE__) + '/app/**/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/lib/**/*.rb'].each {|file| require file }
 
 set :views, File.dirname(__FILE__) + "/views"
-set :public, "public"
+set :public_folder, "public"
 set :static, true
 
 Mongoid::configure do |config|
