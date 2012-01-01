@@ -1,0 +1,1 @@
+bundle exec ruby app/app.rb -e $RACK_ENV
