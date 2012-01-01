@@ -1,32 +1,5 @@
 require 'sinatra'
-require 'json'
-require 'mongoid'
-require 'omniauth-openid'
-require 'openid/store/filesystem'
-
-Dir[File.dirname(__FILE__) + '/lib/**/*.rb'].each {|file| require file }
-
-Mongoid::configure do |config|
-  if ENV["MONGOHQ_URL"]
-    uri = URI.parse(ENV['MONGOHQ_URL'])
-    config.master = Mongo::Connection.new(uri.host, uri.port).db(uri.path.gsub(/^\//, ''))
-    config.master.authenticate(uri.user, uri.password)
-    config.skip_version_check=true
-  else
-    config.master = Mongo::Connection.new.db('causatum')
-    config.use_utc =  false
-    config.use_activesupport_time_zone = true
-  end
-end
-
-use Rack::Session::Cookie, :key => 'rack.session',
-                               :path => '/',
-                               :expire_after => 14400,
-                               :secret => 'change_me'
-
-use OmniAuth::Builder do  
-  provider :openid,  :name => 'google', :store => OpenID::Store::Filesystem.new('./tmp'), :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
-end
+require './app/config'
 
 helpers do
   def protected!
