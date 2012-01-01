@@ -8,3 +8,4 @@ gem 'bson_ext'
 gem 'json'
 gem 'omniauth-openid', git: "git://github.com/intridea/omniauth-openid.git"
 gem 'shotgun'
+gem 'bundler', '=1.0.21'
