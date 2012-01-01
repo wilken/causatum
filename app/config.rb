@@ -27,6 +27,6 @@ use Rack::Session::Cookie, :key => 'rack.session',
                                :secret => 'WEFAQAWRWsFSDFSD'
 
 use OmniAuth::Builder do  
-  provider :openid,  :name => 'google', :store => OpenID::Store::Filesystem.new(ENV["CAUSATUM_ENV"] == 'production' ? "/tmp" : "./tmp"), :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
+  provider :openid,  :name => 'google', :store => OpenID::Store::Filesystem.new(ENV["RACK_ENV"] == 'production' ? "/tmp" : "./tmp"), :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
 end
 
