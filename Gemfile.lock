@@ -59,7 +59,6 @@ PLATFORMS
 
 DEPENDENCIES
   bson_ext
-  bundler (= 1.0.21)
   json
   mongoid (= 2.2.0)
   omniauth-openid!
