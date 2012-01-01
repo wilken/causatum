@@ -1,1 +1,1 @@
-bundle exec ruby app/app.rb -e $RACK_ENV
+web: bundle exec ruby app/app.rb -e $RACK_ENV
