@@ -5,9 +5,9 @@
 	<script>
 	window.addEventListener("message", function(event){
 		if(event.data != 'ready') {
-			console.log(unescape(event.data.text))
-			document.getElementById('text').value = unescape(event.data.text)
-			document.getElementById('source').value = unescape(event.data.url)
+			console.log(decodeURIComponent(event.data.text))
+			document.getElementById('text').value = decodeURIComponent(event.data.text)
+			document.getElementById('source').value = decodeURIComponent(event.data.url)
 		}
 	}, false);
 	</script>
