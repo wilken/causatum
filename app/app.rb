@@ -27,6 +27,18 @@ get '/' do
   erb :index
 end
 
+get '/event/new' do
+  protected!
+  erb :new
+end
+
+post '/event/new' do
+  protected!
+  headers \
+    "X-Frame-Options" => "Go"
+  erb :new
+end
+
 post '/api/users' do
   params = JSON.parse(request.env["rack.request.form_vars"])
   p params
