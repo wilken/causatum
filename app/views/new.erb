@@ -4,8 +4,9 @@
 	<title>Causatum</title>
 	<script>
 	window.addEventListener("message", function(event){
-		document.getElementById('text').value = event.data.text
-		document.getElementById('source').value = event.data.url
+		console.log(unescape(event.data.text))
+		document.getElementById('text').value = unescape(event.data.text)
+		document.getElementById('source').value = unescape(event.data.url)
 	}, false);
 	</script>
 	
