@@ -34,8 +34,6 @@ end
 
 post '/event/new' do
   protected!
-  headers \
-    "X-Frame-Options" => "Go"
   erb :new
 end
 

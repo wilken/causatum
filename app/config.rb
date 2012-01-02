@@ -9,6 +9,7 @@ Dir[File.dirname(__FILE__) + '/lib/**/*.rb'].each {|file| require file }
 set :views, File.dirname(__FILE__) + "/views"
 set :public_folder, "public"
 set :static, true
+set :protection, :except => :frame_options
 
 Mongoid::configure do |config|
   if ENV["MONGOHQ_URL"]
