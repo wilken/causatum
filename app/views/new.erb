@@ -4,17 +4,18 @@
 	<title>Causatum</title>
 	<script>
 	window.addEventListener("message", function(event){
-		console.log(event)
+		console.log(event.data)
 	}, false);
 	</script>
 	
 </head>
-<body id="" onload="top.postMessage('ready','*')">
+<body id="" onload="">
 	<form>
 		<fieldset>
 			<ul>
 			<li><label for='text'>Event description</label><textarea id='text'></textarea></li>
 			<li><label for='source'>Source</label><input type='text' id='source'></input></li>
+			<li><button onclick="top.postMessage('close','*')">Save</button></li>
 			</ul>
 		</fieldset>
 	</form>
