@@ -4,7 +4,8 @@
 	<title>Causatum</title>
 	<script>
 	window.addEventListener("message", function(event){
-		console.log(event.data)
+		document.getElementById('text').value = event.data.text
+		document.getElementById('source').value = event.data.source
 	}, false);
 	</script>
 	
