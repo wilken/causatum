@@ -6,8 +6,8 @@
 	window.addEventListener("message", function(event){
 		if(event.data != 'ready') {
 			console.log(unescape(decodeURIComponent(event.data.text)))
-			document.getElementById('text').value = unescape(decodeURIComponent(event.data.text))
-			document.getElementById('source').value = unescape(decodeURIComponent(event.data.url))
+			document.getElementById('text').value = decodeURIComponent(unescape(event.data.text))
+			document.getElementById('source').value = decodeURIComponent(unescape(event.data.url))
 		}
 	}, false);
 	</script>
